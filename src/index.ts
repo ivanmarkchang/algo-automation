@@ -15,10 +15,6 @@ async function authenticate(): Promise<string> {
     });
 
     const data = await response.json();
-
-    console.log('Response status:', response.status);
-    console.log('Full response data:', data);
-    console.log('Auth token:', data.token);
     
     return data.token;
 }
