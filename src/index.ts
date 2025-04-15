@@ -27,8 +27,12 @@ async function authenticate(): Promise<string> {
         }),
     });
 
+    if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Authentication failed: ${text}`);
+    }
+
     const data = await response.json();
-    
     return data.token;
 }
 
