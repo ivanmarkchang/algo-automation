@@ -1,0 +1,79 @@
+### **Objective**
+The goal of this task is to assess your ability to write TypeScript code that automates the creation and deletion of an algorithm configuration. You will be required to interact with an existing API, handle authentication, and replicate the UX flow using TypeScript. This will test your skills in automation testing, working with REST APIs, handling authentication tokens, and structuring maintainable and reusable code.
+
+If you are familiar with TypeScript, this task should take around 2 hours. However, it should not take more than 5 hours to complete. You are allowed to use AI (e.g., ChatGPT, Copilot, Cursor) to assist with code suggestions and problem-solving.
+
+---
+
+### **Requirements**
+
+#### **1. Understanding the UX Flow**
+
+- You are provided with a **video recording** that demonstrates the UX of the feature you need to automate.
+ Screen Recording 2025-04-03 at 15.05.33.mov
+
+- You should **try the feature yourself** by signing up and performing the necessary actions manually before automating it.
+   
+#### **2. Accessing the Staging Environment**
+
+- Visit [betabuild.avomd.io](https://betabuild.avomd.io) (staging server).
+   
+- **Sign up for a new account** and use the same credentials for authentication in your automation script.
+
+#### **3. Authentication and API Access**
+
+- The browser uses a **Bearer token** for authentication, but for automation, you should **use a different authentication endpoint** instead of extracting it from the browser manually.
+
+- To authenticate, use the provided sign-in endpoint:
+   
+
+```
+const response = await fetch('https://betaapi.avomd.io/api/v2/users/signin/', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ email: 'your-email', password: 'your-password' }),
+});
+
+const data = await response.json();
+const token = data.token;
+```
+
+- Use the retrieved token in all subsequent API requests:
+
+```
+headers: { Authorization: `Token ${token}` }
+```
+
+#### **4. Automating Algo Creation & Deletion**
+
+- Open the **browser DevTools (Network panel)** to inspect API requests made when manually creating and deleting an algorithm.
+
+- **Mimic these API calls in TypeScript** to programmatically:
+
+   1. **Create an algo** (without modifying its content).
+   
+   2. **Delete the algo** after creation.
+
+#### **5. Code Submission Guidelines**
+
+- The code **must** be written in **TypeScript**.
+
+- Push the code to a **public GitHub repository**.
+
+- **Include a README.md file** with clear instructions on:
+- How to install dependencies (if any).
+- How to run the script.
+    - Any configuration requirements.
+
+- Send the GitHub repository link via email to us.
+
+
+---
+
+### **Evaluation Criteria**
+
+- **Correctness** – The automation successfully creates and deletes an algo.
+- **Code Quality** – The script is well-structured, maintainable, and follows best practices.
+- **API Usage** – The candidate correctly identifies and utilizes the necessary API endpoint  
+- **Clarity of Documentation** – The README.md clearly explains how to set up and run the script.
+- **Proactive Clarification** – If the instructions are unclear or ambiguous, the candidate **asks relevant questions via email** to ensure they fully understand the task before proceeding.

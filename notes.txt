@@ -1,0 +1,29 @@
+### Notes
+
+####
+- Steps to take:
+- Manually create a new account at https://betabuild.avomd.io
+- Use Postman to make a POST request to signin, retrieve token
+- Use this token in all subsequent API requests
+
+- Using a browser, open Devtools > Network panel
+- Click on "create an algo" to retrieve the endpoint URL, header requirements, and body requirements
+- Click on "delete an algo" to retrieve the endpoint URL, header requirements, and body requirements
+- Store this data as we will use it to make API requests in TypeScript
+
+- Include a README.md file
+- Include instructions on how to install dependencies
+- Include instructions on how to run the script.
+- Include any configuration requirements.
+
+####
+- Review code for:
+- Correctness: the automation should successfully create and delete an algo. Verify via website.
+- Code quality: check for structure, maintainability, best coding practices.
+- API usage: correctly identifying API endpoints
+- Clarity of documentation: README.MD clearly explains setting up and running the script.
+- Proactive clarification: ask questions via email.
+
+- Send public GitHub repo to Laurence, Swain.
+
+base URL: https://betabuild.avomd.io
