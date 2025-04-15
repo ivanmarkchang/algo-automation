@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+import { AlgoConfig } from './types';
+import { config } from './config';
 
 dotenv.config();
 
@@ -17,29 +19,6 @@ async function authenticate(): Promise<string> {
     const data = await response.json();
     
     return data.token;
-}
-
-interface AlgoConfig {
-    name: string;
-    description: string;
-    team: number;
-    module_sources: any[];
-    permission_type: string;
-    tags?: string[];
-    hidden_tags?: string[];
-    is_google_searchable?: boolean;
-    featured_by_admin_at?: null;
-    is_auto_tagged?: boolean;
-    is_universal?: boolean;
-    members?: {
-        team_member_id: number;
-        name: string;
-        permission_type: string;
-    }[];
-    authors?: any[];
-    reviewer?: null;
-    review_interval?: null;
-    review_expire_at?: null;
 }
 
 async function createAlgo(token: string, config: AlgoConfig): Promise<string> {
@@ -81,17 +60,11 @@ async function main() {
         const token = await authenticate();
         console.log('Authentication successful!');
 
-        const config: AlgoConfig = {
-            name: "test name",
-            description: "test description",
-            team: 1321,
-            module_sources: [],
-            permission_type: "can_view",
-        };
+        const algoConfig: AlgoConfig = config.defaults.algo;
         
         switch (command) {
             case 'create':
-                const algoId = await createAlgo(token, config);
+                const algoId = await createAlgo(token, algoConfig);
                 console.log('Algo created with ID:', algoId);
                 break;
             case 'delete':
