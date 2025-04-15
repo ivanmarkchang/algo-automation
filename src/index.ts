@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { AlgoConfig } from './types';
 import { API } from './constants';
 import { config } from './config';
+import { createAlgo, deleteAlgo } from './services/algoService';
 
 dotenv.config();
 
@@ -34,39 +35,6 @@ async function authenticate(): Promise<string> {
 
     const data = await response.json();
     return data.token;
-}
-
-async function createAlgo(token: string, config: AlgoConfig): Promise<string> {
-    const response = await fetch(`${API.BASE_URL}${API.ENDPOINTS.MODULES}`, {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`
-        },
-        body: JSON.stringify(config)
-    });
-
-    if (!response.ok) {
-        const text = await response.text();
-        throw new Error(`Failed to create algo: ${text}`);
-    }
-
-    const data = await response.json();
-    return data.id.toString();
-}
-
-async function deleteAlgo(token: string, algoId: string): Promise<void> {
-    const response = await fetch(`${API.BASE_URL}${API.ENDPOINTS.MODULES}${algoId}/`, {
-        method: 'DELETE',
-        headers: {
-            'Authorization': `Token ${token}`
-        }
-    });
-
-    if (!response.ok) {
-        const text = await response.text();
-        throw new Error(`Failed to delete algo: ${text}`);
-    }
 }
 
 async function main() {
