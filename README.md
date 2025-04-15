@@ -1,12 +1,11 @@
 # Algo Automation
 
-This project automates the creation and deletion of algorithms using TypeScript.
+This project automates the creation and deletion of AvodMD algorithms using TypeScript.
 
 ## Setup
 
 1. Install dependencies:
-   ```
-   bash
+   ```bash
    npm install
    ```
 
@@ -17,7 +16,10 @@ This project automates the creation and deletion of algorithms using TypeScript.
    ```
 
 3. Run the script:
+   ```bash
+   # To create an algo:
+   npm run create
+
+   # To delete an algo:
+   npm run delete <algoId>
    ```
-   bash
-   npm start
-   ``` 

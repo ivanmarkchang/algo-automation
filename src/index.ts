@@ -61,21 +61,51 @@ async function createAlgo(token: string, config: AlgoConfig): Promise<string> {
     return data.id.toString();
 }
 
+async function deleteAlgo(token: string, algoId: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/v1/modules/${algoId}/`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Failed to delete algo: ${text}`);
+    }
+}
+
 async function main() {
     try {
+        const command = process.argv[2];
         const token = await authenticate();
         console.log('Authentication successful!');
 
         const config: AlgoConfig = {
-            name: "test",
-            description: "test",
+            name: "test name",
+            description: "test description",
             team: 1321,
             module_sources: [],
             permission_type: "can_view",
         };
         
-        const algoId = await createAlgo(token, config);
-        console.log('Algo created with ID:', algoId);
+        switch (command) {
+            case 'create':
+                const algoId = await createAlgo(token, config);
+                console.log('Algo created with ID:', algoId);
+                break;
+            case 'delete':
+                const id = process.argv[3];
+                if (!id) {
+                    throw new Error('Algo ID is required');
+                }
+                await deleteAlgo(token, id);
+                console.log('Algo deleted successfully!');
+                break;
+            default:
+                console.log('Please specify a command: create or delete');
+                process.exit(1);
+        }
     } catch (error) {
         console.error('Error:', error);
     }

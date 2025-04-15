@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "create": "ts-node src/index.ts create",
+    "delete": "ts-node src/index.ts delete"
   },
   "keywords": [],
   "author": "",
