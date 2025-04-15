@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import { AlgoConfig } from './types';
-import { API } from './constants';
 import { config } from './config';
 import { createAlgo, deleteAlgo } from './services/algoService';
+import { authenticate } from './services/authService';
 
 dotenv.config();
 
@@ -16,25 +16,6 @@ function validateEnvironment() {
             'Please check your .env file and ensure all required variables are set.'
         );
     }
-}
-
-async function authenticate(): Promise<string> {
-    const response = await fetch(`${API.BASE_URL}${API.ENDPOINTS.SIGNIN}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            email: process.env.EMAIL,
-            password: process.env.PASSWORD
-        }),
-    });
-
-    if (!response.ok) {
-        const text = await response.text();
-        throw new Error(`Authentication failed: ${text}`);
-    }
-
-    const data = await response.json();
-    return data.token;
 }
 
 async function main() {
