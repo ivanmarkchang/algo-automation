@@ -5,6 +5,18 @@ import { config } from './config';
 
 dotenv.config();
 
+function validateEnvironment() {
+    const requiredEnvVars = ['EMAIL', 'PASSWORD'];
+    const missingVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+    if (missingVars.length > 0) {
+        throw new Error(
+            `Missing required environment variables: ${missingVars.join(', ')}\n` +
+            'Please check your .env file and ensure all required variables are set.'
+        );
+    }
+}
+
 async function authenticate(): Promise<string> {
     const response = await fetch(`${API.BASE_URL}${API.ENDPOINTS.SIGNIN}`, {
         method: 'POST',
@@ -55,6 +67,8 @@ async function deleteAlgo(token: string, algoId: string): Promise<void> {
 
 async function main() {
     try {
+        validateEnvironment();
+
         const command = process.argv[2];
         const token = await authenticate();
         console.log('Authentication successful!');
