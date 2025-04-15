@@ -19,35 +19,37 @@ async function authenticate(): Promise<string> {
     return data.token;
 }
 
-async function createAlgo(token: string): Promise<string> {
+interface AlgoConfig {
+    name: string;
+    description: string;
+    team: number;
+    module_sources: any[];
+    permission_type: string;
+    tags?: string[];
+    hidden_tags?: string[];
+    is_google_searchable?: boolean;
+    featured_by_admin_at?: null;
+    is_auto_tagged?: boolean;
+    is_universal?: boolean;
+    members?: {
+        team_member_id: number;
+        name: string;
+        permission_type: string;
+    }[];
+    authors?: any[];
+    reviewer?: null;
+    review_interval?: null;
+    review_expire_at?: null;
+}
+
+async function createAlgo(token: string, config: AlgoConfig): Promise<string> {
     const response = await fetch(`${API_BASE_URL}/v1/modules/`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`
         },
-        body: JSON.stringify({
-            name: "test2",
-            description: "test2",
-            tags: [],
-            hidden_tags: [],
-            is_google_searchable: false,
-            featured_by_admin_at: null,
-            permission_type: "can_view",
-            is_auto_tagged: false,
-            module_sources: [],
-            is_universal: false,
-            members: [{
-                team_member_id: 2684,
-                name: "Ivan Chang",
-                permission_type: "owner"
-            }],
-            team: 1321,
-            authors: [],
-            reviewer: null,
-            review_interval: null,
-            review_expire_at: null
-        })
+        body: JSON.stringify(config)
     });
 
     if (!response.ok) {
@@ -63,8 +65,16 @@ async function main() {
     try {
         const token = await authenticate();
         console.log('Authentication successful!');
+
+        const config: AlgoConfig = {
+            name: "test",
+            description: "test",
+            team: 1321,
+            module_sources: [],
+            permission_type: "can_view",
+        };
         
-        const algoId = await createAlgo(token);
+        const algoId = await createAlgo(token, config);
         console.log('Algo created with ID:', algoId);
     } catch (error) {
         console.error('Error:', error);
