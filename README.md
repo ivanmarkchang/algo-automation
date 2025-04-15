@@ -54,3 +54,9 @@ Run a specific test file:
 ```bash
 npm test -- <path-to-test-file>
 ```
+
+### Future Improvements
+
+- Add more specific error types (AuthenticationError, ValidationError)
+- Replace console.log with logging service
+- Add support for different environments (dev, prod)
