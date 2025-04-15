@@ -1,13 +1,12 @@
 import dotenv from 'dotenv';
 import { AlgoConfig } from './types';
+import { API } from './constants';
 import { config } from './config';
 
 dotenv.config();
 
-const API_BASE_URL = 'https://betaapi.avomd.io/api';
-
 async function authenticate(): Promise<string> {
-    const response = await fetch(`${API_BASE_URL}/v2/users/signin/`, {
+    const response = await fetch(`${API.BASE_URL}${API.ENDPOINTS.SIGNIN}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -22,7 +21,7 @@ async function authenticate(): Promise<string> {
 }
 
 async function createAlgo(token: string, config: AlgoConfig): Promise<string> {
-    const response = await fetch(`${API_BASE_URL}/v1/modules/`, {
+    const response = await fetch(`${API.BASE_URL}${API.ENDPOINTS.MODULES}`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
@@ -41,7 +40,7 @@ async function createAlgo(token: string, config: AlgoConfig): Promise<string> {
 }
 
 async function deleteAlgo(token: string, algoId: string): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/v1/modules/${algoId}/`, {
+    const response = await fetch(`${API.BASE_URL}${API.ENDPOINTS.MODULES}${algoId}/`, {
         method: 'DELETE',
         headers: {
             'Authorization': `Token ${token}`
