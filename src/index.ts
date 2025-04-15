@@ -3,20 +3,9 @@ import { AlgoConfig } from './types';
 import { config } from './config';
 import { createAlgo, deleteAlgo } from './services/algoService';
 import { authenticate } from './services/authService';
+import { validateEnvironment } from './utils/envUtils';
 
 dotenv.config();
-
-function validateEnvironment() {
-    const requiredEnvVars = ['EMAIL', 'PASSWORD'];
-    const missingVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
-
-    if (missingVars.length > 0) {
-        throw new Error(
-            `Missing required environment variables: ${missingVars.join(', ')}\n` +
-            'Please check your .env file and ensure all required variables are set.'
-        );
-    }
-}
 
 async function main() {
     try {
